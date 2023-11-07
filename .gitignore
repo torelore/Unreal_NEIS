@@ -164,8 +164,3 @@ SACUnrealProject/SACProject/Content/Data/DT_PlayerData.uasset
 # End of https://www.toptal.com/developers/gitignore/api/c++,unrealengine
 SACProject/Content/Data/DT_AIData.uasset
 SACProject/Content/Data/DT_PlayerData.uasset
-
-
-# Contents
-SACProject/Content/*
-
