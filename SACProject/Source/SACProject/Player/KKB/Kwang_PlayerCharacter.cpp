@@ -229,7 +229,7 @@ void AKwang_PlayerCharacter::Attack()
 
 	float temp = FwdVec.X;
 	FwdVec.X = FwdVec.Y * -1.f;
-	FwdVec.Y = temp * 1.f;
+	FwdVec.Y = temp;
 
 	FwdVec = GetTransform().GetLocation() + FwdVec * 100.f;
 
@@ -247,7 +247,7 @@ void AKwang_PlayerCharacter::Attack_Enhance()
 
 		float temp = FwdVec.X;
 		FwdVec.X = FwdVec.Y * -1.f;
-		FwdVec.Y = temp * 1.f;
+		FwdVec.Y = temp;
 
 		FwdVec = GetTransform().GetLocation() + FwdVec * 100.f;
 
@@ -281,7 +281,7 @@ void AKwang_PlayerCharacter::Dash()
 
 	float temp = FwdVec.X;
 	FwdVec.X = FwdVec.Y * -1.f;
-	FwdVec.Y = temp * 1.f;
+	FwdVec.Y = temp;
 
 	// 오라 액티브 시에는 쿨타임이 없다.
 	if (m_AuraActive) {
