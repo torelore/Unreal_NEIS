@@ -54,7 +54,7 @@ AKwang_PlayerCharacter::AKwang_PlayerCharacter() :
 
 	
 	// Cooldown Comp
-	// KKB ¼öÁ¤ ÇÊ¿ä. ¸ÅÁ÷ ³Ñ¹ö¸¦ ÀüºÎ Æ¯Á¤ Ç×¸ñ¿¡¼­ °¡Á®¿Í Àû¿ëÇÏµµ·Ï º¯°æ.
+	// KKB ìˆ˜ì • í•„ìš”. ë§¤ì§ ë„˜ë²„ë¥¼ ì „ë¶€ íŠ¹ì • í•­ëª©ì—ì„œ ê°€ì ¸ì™€ ì ìš©í•˜ë„ë¡ ë³€ê²½.
 	m_DashCooldown = CreateDefaultSubobject<UCoolDownComponent>(TEXT("DashCooldown"));
 	m_DashCooldown->SetCooldownTime(m_DashCooldownTime);
 
@@ -82,7 +82,7 @@ void AKwang_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ÇÃ·¹ÀÌ¾î À§Á¬ ¼¼ÆÃ
+	// í”Œë ˆì´ì–´ ìœ„ì ¯ ì„¸íŒ…
 	AFireLandGameMode* GameMode = Cast<AFireLandGameMode>(GetWorld()->GetAuthGameMode());
 
 	ADefaultPlayerState* DefaultPlayerState = Cast<ADefaultPlayerState>(GetPlayerState());
@@ -110,7 +110,7 @@ void AKwang_PlayerCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 
-	// ´ë½¬ »ç¿ë °¡´É ¿©ºÎ Ã¼Å©
+	// ëŒ€ì‰¬ ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ ì²´í¬
 	if (IsValid(m_DashCooldown)) {
 		if (m_DashCooldown->IsCooldown()) {
 			float Remain = m_DashCooldown->UpdateCooldown(DeltaTime);
@@ -124,7 +124,7 @@ void AKwang_PlayerCharacter::Tick(float DeltaTime)
 		}
 	}
 
-	// Skill2(½ã´õ½ºÅè) »ç¿ë °¡´É ¿©ºÎ Ã¼Å©
+	// Skill2(ì¬ë”ìŠ¤í†°) ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ ì²´í¬
 	if (IsValid(m_ThunderStormCooldown)) {
 		if (m_ThunderStormCooldown->IsCooldown()) {
 			float Remain = m_ThunderStormCooldown->UpdateCooldown(DeltaTime);
@@ -138,7 +138,7 @@ void AKwang_PlayerCharacter::Tick(float DeltaTime)
 		}
 	}
 
-	// Skill3(¿À¶ó) »ç¿ë °¡´É ¿©ºÎ Ã¼Å©
+	// Skill3(ì˜¤ë¼) ì‚¬ìš© ê°€ëŠ¥ ì—¬ë¶€ ì²´í¬
 	if (IsValid(m_ThunderAuraCooldown)) {
 		if (m_ThunderAuraCooldown->IsCooldown()) {
 			float Remain = m_ThunderAuraCooldown->UpdateCooldown(DeltaTime);
@@ -159,14 +159,14 @@ void AKwang_PlayerCharacter::Tick(float DeltaTime)
 
 
 
-	// ¿À¶ó ¾×Æ¼ºê µµÁß, ÇÃ·¹ÀÌ¾îÀÇ ¹«±â¸¦ °è¼ÓÇØ¼­ µû¶ó¿Àµµ·Ï ÀÛ¾÷
+	// ì˜¤ë¼ ì•¡í‹°ë¸Œ ë„ì¤‘, í”Œë ˆì´ì–´ì˜ ë¬´ê¸°ë¥¼ ê³„ì†í•´ì„œ ë”°ë¼ì˜¤ë„ë¡ ì‘ì—…
 	if (m_AuraActive) 
 		if (IsValid(m_AuraEffect)) 
 			if (m_AuraSkillCount >= m_AuraSkillMax) 
 				Skill3_AuraEnd();
 
 
-	// ¿À¶ó ÀÌÆåÆ®´Â °è¼Ó ÇÃ·¹ÀÌ¾î¸¦ µû¶ó´Ù´Ô.
+	// ì˜¤ë¼ ì´í™íŠ¸ëŠ” ê³„ì† í”Œë ˆì´ì–´ë¥¼ ë”°ë¼ë‹¤ë‹˜.
 	FVector Vec = GetMesh()->GetSocketLocation(TEXT("FX_weapon_base"));
 	FRotator Rot = GetMesh()->GetSocketRotation(TEXT("FX_weapon_base"));
 
@@ -219,8 +219,8 @@ void AKwang_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 
 void AKwang_PlayerCharacter::AddSkill1Charge()
 {
-	// Energy ball ½ºÅ³ÀÇ Â÷Áö ´Ü°è¸¦ Áõ°¨
-	m_ChargeRate++;
+	// Energy ball ìŠ¤í‚¬ì˜ ì°¨ì§€ ë‹¨ê³„ë¥¼ ì¦ê°
+	++m_ChargeRate;
 }
 
 void AKwang_PlayerCharacter::Attack()
@@ -235,13 +235,13 @@ void AKwang_PlayerCharacter::Attack()
 
 	FRotator CharRot = FRotator(0.0, GetMesh()->GetRelativeRotation().Yaw, 0.0);
 
-	// °ø°İ ¹üÀ§¿¡ Ãæµ¹Ã¼¸¦ »ı¼ºÇÏ¿©, ÇÇÇØ¸¦ ÁØ´Ù.
+	// ê³µê²© ë²”ìœ„ì— ì¶©ëŒì²´ë¥¼ ìƒì„±í•˜ì—¬, í”¼í•´ë¥¼ ì¤€ë‹¤.
 	GetWorld()->SpawnActor<AKwang_BaseAttackCol>(FwdVec, CharRot);
 }
 
 void AKwang_PlayerCharacter::Attack_Enhance()
 {
-	// ¿À¶ó°¡ ÄÑÁ®ÀÖ´Ù¸é Ãß°¡ È¿°ú ¹ßµ¿.
+	// ì˜¤ë¼ê°€ ì¼œì ¸ìˆë‹¤ë©´ ì¶”ê°€ íš¨ê³¼ ë°œë™.
 	if (m_AuraActive) {
 		FVector FwdVec = GetMesh()->GetForwardVector();
 
@@ -255,7 +255,7 @@ void AKwang_PlayerCharacter::Attack_Enhance()
 
 		GetWorld()->SpawnActor<AKwang_BaseAttackCol>(FwdVec, CharRot);
 
-		m_AuraSkillCount++;
+		++m_AuraSkillCount;
 
 
 
@@ -270,23 +270,23 @@ void AKwang_PlayerCharacter::Attack_Enhance()
 
 void AKwang_PlayerCharacter::Dash()
 {
-	// Äğ´Ù¿îÀÌ¶ó¸é »ç¿ë ºÒ°¡.
+	// ì¿¨ë‹¤ìš´ì´ë¼ë©´ ì‚¬ìš© ë¶ˆê°€.
 	if (IsValid(m_DashCooldown))
 		if (m_DashCooldown->IsCooldown())
 			return;
 
 
-	// ´ë½¬ Ã³¸®¸¦ ÇÑ´Ù.
+	// ëŒ€ì‰¬ ì²˜ë¦¬ë¥¼ í•œë‹¤.
 	FVector FwdVec = GetMesh()->GetForwardVector();
 
 	float temp = FwdVec.X;
 	FwdVec.X = FwdVec.Y * -1.f;
 	FwdVec.Y = temp * 1.f;
 
-	// ¿À¶ó ¾×Æ¼ºê ½Ã¿¡´Â ÄğÅ¸ÀÓÀÌ ¾ø´Ù.
+	// ì˜¤ë¼ ì•¡í‹°ë¸Œ ì‹œì—ëŠ” ì¿¨íƒ€ì„ì´ ì—†ë‹¤.
 	if (m_AuraActive) {
 		LaunchCharacter(FwdVec * m_DashDistance, false, false);
-		m_AuraSkillCount++;
+		++m_AuraSkillCount;
 
 
 		if (IsValid(m_PlayerWidget)) {
@@ -298,7 +298,7 @@ void AKwang_PlayerCharacter::Dash()
 	else {
 		LaunchCharacter(FwdVec * m_DashDistance, false, false);
 
-		// Äğ´Ù¿î ½ÃÀÛ
+		// ì¿¨ë‹¤ìš´ ì‹œì‘
 		if (IsValid(m_DashCooldown))
 			m_DashCooldown->StartCooldown();
 	}
@@ -306,7 +306,7 @@ void AKwang_PlayerCharacter::Dash()
 
 void AKwang_PlayerCharacter::Skill1_ChargeShot()
 {
-	// Anim Inst ½ÇÇà
+	// Anim Inst ì‹¤í–‰
 	UKwang_AnimInstance* Anim = Cast<UKwang_AnimInstance>(GetMesh()->GetAnimInstance());
 
 	if (IsValid(Anim))
@@ -320,12 +320,12 @@ void AKwang_PlayerCharacter::Skill1_ChargeShot_ActiveSkill()
 
 void AKwang_PlayerCharacter::Skill2_ThunderStorm()
 {
-	// Äğ´Ù¿îÀÌ¶ó¸é »ç¿ë ºÒ°¡.
+	// ì¿¨ë‹¤ìš´ì´ë¼ë©´ ì‚¬ìš© ë¶ˆê°€.
 	if (IsValid(m_ThunderStormCooldown))
 		if (m_ThunderStormCooldown->IsCooldown())
 			return;
 
-	// Anim Inst ½ÇÇà
+	// Anim Inst ì‹¤í–‰
 	UKwang_AnimInstance* Anim = Cast<UKwang_AnimInstance>(GetMesh()->GetAnimInstance());
 
 	if (IsValid(Anim))
@@ -336,23 +336,23 @@ void AKwang_PlayerCharacter::Skill2_ThunderStorm_ActiveSkill()
 {
 	FRotator CharRot = FRotator(0.0, GetMesh()->GetRelativeRotation().Yaw, 0.0);
 
-	// °ø°İ ¿µ¿ª¿¡ Ãæµ¹Ã¼ »ı¼ºÇÏ¿© ÇÇÇØ¸¦ ÁØ´Ù.
+	// ê³µê²© ì˜ì—­ì— ì¶©ëŒì²´ ìƒì„±í•˜ì—¬ í”¼í•´ë¥¼ ì¤€ë‹¤.
 	 GetWorld()->SpawnActor<AKwang_ThunderStormCol>(GetActorLocation(), CharRot);
 
-	// Äğ´Ù¿î ½ÃÀÛ
+	// ì¿¨ë‹¤ìš´ ì‹œì‘
 	if (IsValid(m_ThunderStormCooldown))
 		m_ThunderStormCooldown->StartCooldown();
 }
 
 void AKwang_PlayerCharacter::Skill2_ThunderStorm_ActiveSkill_Enhance()
 {
-	// ¿À¶ó°¡ ÄÑÁ®ÀÖ´Ù¸é Ãß°¡ È¿°ú ¹ßµ¿.
+	// ì˜¤ë¼ê°€ ì¼œì ¸ìˆë‹¤ë©´ ì¶”ê°€ íš¨ê³¼ ë°œë™.
 	if (m_AuraActive) {
 		FRotator CharRot = FRotator(0.0, GetMesh()->GetRelativeRotation().Yaw, 0.0);
 
 		GetWorld()->SpawnActor<AKwang_ThunderStormCol>(GetActorLocation(), CharRot);
 
-		m_AuraSkillCount++;
+		++m_AuraSkillCount;
 
 		if (IsValid(m_PlayerWidget)) {
 			int AuraSkillRemain = m_AuraSkillMax - m_AuraSkillCount;
@@ -364,13 +364,13 @@ void AKwang_PlayerCharacter::Skill2_ThunderStorm_ActiveSkill_Enhance()
 
 void AKwang_PlayerCharacter::Skill3_ThunderAura()
 {
-	// Äğ´Ù¿îÀÌ¶ó¸é »ç¿ë ºÒ°¡.
+	// ì¿¨ë‹¤ìš´ì´ë¼ë©´ ì‚¬ìš© ë¶ˆê°€.
 	if (IsValid(m_ThunderAuraCooldown))
 		if (m_ThunderAuraCooldown->IsCooldown())
 			return;
 
 
-	// Anim Inst ½ÇÇà
+	// Anim Inst ì‹¤í–‰
 	UKwang_AnimInstance* Anim = Cast<UKwang_AnimInstance>(GetMesh()->GetAnimInstance());
 
 	if (IsValid(Anim))
@@ -379,33 +379,33 @@ void AKwang_PlayerCharacter::Skill3_ThunderAura()
 
 void AKwang_PlayerCharacter::Skill3_ThunderAura_ActiveSkill()
 {
-	// ¿À¶ó¸¦ ¹«±â À§Ä¡¿Í È¸Àü¿¡ ¸ÂÃß¾î »ı¼º
-	// ÀÌÈÄ LifeTimeÀÌ ´Ù µÇ¸é ¿À¶ó¸¦ »èÁ¦.
+	// ì˜¤ë¼ë¥¼ ë¬´ê¸° ìœ„ì¹˜ì™€ íšŒì „ì— ë§ì¶”ì–´ ìƒì„±
+	// ì´í›„ LifeTimeì´ ë‹¤ ë˜ë©´ ì˜¤ë¼ë¥¼ ì‚­ì œ.
 	m_AuraActive = true;
 
-	// ¿À¶ó ÀÌÆåÆ® È°¼ºÈ­
+	// ì˜¤ë¼ ì´í™íŠ¸ í™œì„±í™”
 	if (IsValid(m_AuraEffect))
 		m_AuraEffect->Activate();
 
-	// ÀÏÁ¤ ½Ã°£ µÚ¿¡ Aura°¡ ÀÚµ¿À¸·Î ²¨Áöµµ·Ï ¼¼ÆÃ
+	// ì¼ì • ì‹œê°„ ë’¤ì— Auraê°€ ìë™ìœ¼ë¡œ êº¼ì§€ë„ë¡ ì„¸íŒ…
 	GetWorld()->GetTimerManager().ClearTimer(m_AuraLifeTimerHnd);
 	GetWorld()->GetTimerManager().SetTimer(m_AuraLifeTimerHnd, this, &AKwang_PlayerCharacter::Skill3_AuraEnd, m_AuraLifeTime, false);
 
-	// ½ºÅ³À» ÀÏÁ¤ °¹¼ö »ç¿ëÇÏ¸é ¿À¶ó°¡ ÀÚµ¿À¸·Î ²¨Áö°Ô ÇÏ±â À§ÇÑ º¯¼ö ¼¼ÆÃ
+	// ìŠ¤í‚¬ì„ ì¼ì • ê°¯ìˆ˜ ì‚¬ìš©í•˜ë©´ ì˜¤ë¼ê°€ ìë™ìœ¼ë¡œ êº¼ì§€ê²Œ í•˜ê¸° ìœ„í•œ ë³€ìˆ˜ ì„¸íŒ…
 	m_AuraSkillCount = 0;
 
 
-	// ´ë½¬ Äğ´Ù¿î ÃÊ±âÈ­
+	// ëŒ€ì‰¬ ì¿¨ë‹¤ìš´ ì´ˆê¸°í™”
 	if (IsValid(m_DashCooldown))
 		m_DashCooldown->ResetCooldown();
 
 
-	// ¿À¶ó À§Á¬ È°¼ºÈ­
+	// ì˜¤ë¼ ìœ„ì ¯ í™œì„±í™”
 	if (IsValid(m_PlayerWidget))
 		m_PlayerWidget->SetEBuffRemain(m_AuraSkillMax);
 
 
-	// Äğ´Ù¿î ½ÃÀÛ
+	// ì¿¨ë‹¤ìš´ ì‹œì‘
 	if (IsValid(m_ThunderAuraCooldown))
 		m_ThunderAuraCooldown->StartCooldown();
 }
@@ -415,13 +415,13 @@ void AKwang_PlayerCharacter::Skill3_AuraEnd()
 	if (!m_AuraActive)
 		return;
 
-	// ¿À¶ó¸¦ Á¾·áÇÏ°í, ¿À¶ó¸¦ »èÁ¦ÇÑ´Ù.
+	// ì˜¤ë¼ë¥¼ ì¢…ë£Œí•˜ê³ , ì˜¤ë¼ë¥¼ ì‚­ì œí•œë‹¤.
 	m_AuraActive = false;
 
 	if(IsValid(m_AuraEffect))
 		m_AuraEffect->Deactivate();
 
-	// ¹öÇÁ ÃÊ±âÈ­
+	// ë²„í”„ ì´ˆê¸°í™”
 	if (IsValid(m_PlayerWidget))
 		m_PlayerWidget->SetEBuffRemain(0);
 
@@ -436,10 +436,10 @@ void AKwang_PlayerCharacter::ShootProjectile()
 	ASwordProjectile* ProjObj = GetWorld()->SpawnActor<ASwordProjectile>(Vec, Rot);
 
 	if (IsValid(ProjObj)) {
-		// ¿À¶ó°¡ ÄÑÁ®ÀÖ´Ù¸é, Áï½Ã 3´Ü°è·Î ¹ß»ç / ¾Æ´Ï¶ó¸é ÇöÀç Â÷Áö ´Ü°è·Î ¹ß»ç.
+		// ì˜¤ë¼ê°€ ì¼œì ¸ìˆë‹¤ë©´, ì¦‰ì‹œ 3ë‹¨ê³„ë¡œ ë°œì‚¬ / ì•„ë‹ˆë¼ë©´ í˜„ì¬ ì°¨ì§€ ë‹¨ê³„ë¡œ ë°œì‚¬.
 		if (m_AuraActive) {
 			ProjObj->Shoot(2.25);
-			m_AuraSkillCount++;
+			++m_AuraSkillCount;
 
 
 			if (IsValid(m_PlayerWidget)) {
