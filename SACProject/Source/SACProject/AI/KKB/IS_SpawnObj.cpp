@@ -89,7 +89,7 @@ void AIS_SpawnObj::SpawnMonster(bool IsElite)
 
 	m_MonsterRespawnCooldown->StartCooldown();
 
-	m_NormalSpawnCount++;
+	++m_NormalSpawnCount;
 
 	if (m_NormalSpawnCount >= m_ISSpawnMaxCount) 
 		Destroy();
